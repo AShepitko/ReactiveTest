@@ -10,10 +10,14 @@ import UIKit
 
 class MainViewController: UIViewController {
 
+    let viewModel = MainViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.lightGray
+        
+        viewModel.test()
     }
 
     override func didReceiveMemoryWarning() {
