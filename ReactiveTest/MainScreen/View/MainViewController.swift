@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
 
     @IBOutlet weak var serverIDLabel: UILabel!
     @IBOutlet weak var urlLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var imageUrlLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
@@ -34,7 +34,9 @@ class MainViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.serverIDLabel.text = "ID:\n\(series.serverID.description)"
                     self.urlLabel.text = "URL:\n\(series.url)"
-                    self.nameLabel.text = "Name:\n\(series.name)"
+                    if let name = series.name {
+                        self.nameTextField.text = name
+                    }
                     self.imageUrlLabel.text = "Image:\n\(series.imageUrl)"
                     self.genresLabel.text = "Genres:\n\(series.genres)"
                     self.summaryLabel.text = "Summary:\n\(series.summary)"
@@ -44,7 +46,16 @@ class MainViewController: UIViewController {
         })
         .addDisposableTo(disposeBag)
         
+        nameTextField.rx.text.bindNext { text in
+            self.viewModel.series.value?.name = text
+        }
+        .addDisposableTo(disposeBag)
+        
         viewModel.fetchData()
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapHandler))
+        tapRecognizer.cancelsTouchesInView = true
+        view.addGestureRecognizer(tapRecognizer)
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,6 +64,11 @@ class MainViewController: UIViewController {
         viewModel.fetchData()
     }
     
+    func tapHandler(recognizer: UITapGestureRecognizer) {
+        view.endEditing(true)
+        
+        viewModel.saveData()
+    }
 
     /*
     // MARK: - Navigation

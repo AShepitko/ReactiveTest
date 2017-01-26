@@ -28,6 +28,7 @@ class MainViewModel {
                 let configuration = URLSessionConfiguration.default
                 let session = URLSession(configuration: configuration)
                 session.dataTask(with: URL(string: "https://dl.dropboxusercontent.com/u/65496631/got.json")!) { (data, response, error) in
+                    print("Response: \(response)")
                     if let data = data {
                         let json = JSON(data: data)
                         let serverID = json["id"].int64Value
@@ -35,18 +36,20 @@ class MainViewModel {
                         let name = json["name"].stringValue
                         let imageUrl = json["image"]["original"].stringValue
                         let summary = json["summary"].stringValue
-                        if let existingSeries = requestResult.first(where: { $0.serverID == serverID }) {
-                            self.series.value = existingSeries
+                        
+                        var seriesValue = self.series.value
+                        if requestResult.count == 0 {
+                            seriesValue = NSEntityDescription.insertNewObject(forEntityName: "Series", into: appDelegate.persistentContainer.viewContext) as? Series
                         }
-                        else {
-                            self.series.value = NSEntityDescription.insertNewObject(forEntityName: "Series", into: appDelegate.persistentContainer.viewContext) as? Series
+                        if let value = seriesValue {
+                            value.serverID = serverID
+                            value.url = url
+                            value.name = name
+                            value.imageUrl = imageUrl
+                            value.summary = summary
+                            appDelegate.saveContext()
                         }
-                        self.series.value?.serverID = serverID
-                        self.series.value?.url = url
-                        self.series.value?.name = name
-                        self.series.value?.imageUrl = imageUrl
-                        self.series.value?.summary = summary
-                        appDelegate.saveContext()
+                        self.series.value = seriesValue
                     }
                 }
                 .resume()
@@ -56,7 +59,13 @@ class MainViewModel {
                 print("Fetch error: \(error)")
             }
         }
-
+    }
+    
+    func saveData() {
+        //TODO: save on server
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.saveContext()
+        }
     }
     
 }
