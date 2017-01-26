@@ -12,8 +12,18 @@ import RxSwift
 import CoreData
 
 class MainViewModel {
+    
+    public struct SeriesModel {
+        var serverID: Int?
+        var url: String?
+        var name: String?
+        var imageUrl: String?
+        var genres: String?
+        var summary: String?
+        var seasons: NSSet?
+    }
 
-    var series: Variable<Series?> = Variable(nil)
+    var series: Variable<SeriesModel> = Variable(SeriesModel())
     
     func fetchData() {
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
@@ -22,7 +32,13 @@ class MainViewModel {
             do {
                 requestResult = try appDelegate.persistentContainer.viewContext.fetch(fetchRequest)
                 if requestResult.count > 0 {
-                    self.series.value = requestResult.first
+                    if let cachedSeries = requestResult.first {
+                        self.series.value.serverID = Int(cachedSeries.serverID)
+                        self.series.value.url = cachedSeries.url
+                        self.series.value.name = cachedSeries.name
+                        self.series.value.imageUrl = cachedSeries.imageUrl
+                        self.series.value.summary = cachedSeries.summary
+                    }
                 }
                 
                 let configuration = URLSessionConfiguration.default
@@ -31,25 +47,12 @@ class MainViewModel {
                     print("Response: \(response)")
                     if let data = data {
                         let json = JSON(data: data)
-                        let serverID = json["id"].int64Value
-                        let url = json["url"].stringValue
-                        let name = json["name"].stringValue
-                        let imageUrl = json["image"]["original"].stringValue
-                        let summary = json["summary"].stringValue
-                        
-                        var seriesValue = self.series.value
-                        if requestResult.count == 0 {
-                            seriesValue = NSEntityDescription.insertNewObject(forEntityName: "Series", into: appDelegate.persistentContainer.viewContext) as? Series
-                        }
-                        if let value = seriesValue {
-                            value.serverID = serverID
-                            value.url = url
-                            value.name = name
-                            value.imageUrl = imageUrl
-                            value.summary = summary
-                            appDelegate.saveContext()
-                        }
-                        self.series.value = seriesValue
+                        self.series.value.serverID = json["id"].intValue
+                        self.series.value.url = json["url"].stringValue
+                        self.series.value.name = json["name"].stringValue
+                        self.series.value.imageUrl = json["image"]["original"].stringValue
+                        self.series.value.summary = json["summary"].stringValue
+                        self.saveData()
                     }
                 }
                 .resume()
@@ -64,6 +67,23 @@ class MainViewModel {
     func saveData() {
         //TODO: save on server
         if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            var requestResult:[Series] = []
+            let fetchRequest = Series.fetchRequest() as NSFetchRequest<Series>
+            do {
+                requestResult = try appDelegate.persistentContainer.viewContext.fetch(fetchRequest)
+                let seriesValue = (requestResult.count > 0) ? requestResult.first : NSEntityDescription.insertNewObject(forEntityName: "Series", into: appDelegate.persistentContainer.viewContext) as? Series
+                if let value = seriesValue {
+                    value.serverID = Int64(series.value.serverID!)
+                    value.url = series.value.url
+                    value.name = series.value.name
+                    value.imageUrl = series.value.imageUrl
+                    value.summary = series.value.summary
+                    appDelegate.saveContext()
+                }
+            }
+            catch let error as NSError {
+                print("Fetch error: \(error)")
+            }
             appDelegate.saveContext()
         }
     }

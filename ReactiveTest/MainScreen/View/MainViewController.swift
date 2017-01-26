@@ -30,24 +30,24 @@ class MainViewController: UIViewController {
         view.backgroundColor = UIColor.lightGray
 
         viewModel.series.asObservable().subscribe(onNext: { series in
-            if let series = series {
-                DispatchQueue.main.async {
-                    self.serverIDLabel.text = "ID:\n\(series.serverID.description)"
-                    self.urlLabel.text = "URL:\n\(series.url)"
-                    if let name = series.name {
-                        self.nameTextField.text = name
-                    }
-                    self.imageUrlLabel.text = "Image:\n\(series.imageUrl)"
-                    self.genresLabel.text = "Genres:\n\(series.genres)"
-                    self.summaryLabel.text = "Summary:\n\(series.summary)"
-                    self.seasonsCountLabel.text = "Seasons:\n\(series.seasons?.count.description)"
+            DispatchQueue.main.async {
+                self.serverIDLabel.text = "ID:\n\(series.serverID)"
+                self.urlLabel.text = "URL:\n\(series.url)"
+                if let name = series.name {
+                    self.nameTextField.text = name
+                }
+                self.imageUrlLabel.text = "Image:\n\(series.imageUrl)"
+                self.genresLabel.text = "Genres:\n\(series.genres)"
+                self.summaryLabel.text = "Summary:\n\(series.summary)"
+                if let seasons = series.seasons {
+                    self.seasonsCountLabel.text = "Seasons:\n\(seasons.count)"
                 }
             }
         })
         .addDisposableTo(disposeBag)
         
         nameTextField.rx.text.bindNext { text in
-            self.viewModel.series.value?.name = text
+            self.viewModel.series.value.name = text
         }
         .addDisposableTo(disposeBag)
         
