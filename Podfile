@@ -9,4 +9,8 @@ target 'ReactiveTest' do
   pod 'RxCocoa', '~> 3.0'
   pod 'SwiftyJSON', '~> 3.0'
 
+  pod 'Moya', '~> 8.0'
+  pod 'Moya/RxSwift'
+  pod "Moya-SwiftyJSONMapper"
+
 end
