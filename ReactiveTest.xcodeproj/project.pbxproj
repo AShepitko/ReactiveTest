@@ -8,7 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		40DCA4EF19621DD49508285D /* Pods_ReactiveTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D20025F18A8E80A3806C3DA5 /* Pods_ReactiveTest.framework */; };
-		E609120C1E38ECC400DBEF6A /* Series.swift in Sources */ = {isa = PBXBuildFile; fileRef = E609120B1E38ECC400DBEF6A /* Series.swift */; };
+		E6AB42F41E409EDD000C4BC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB42F31E409EDD000C4BC9 /* LoginViewController.swift */; };
+		E6AB42F61E409F16000C4BC9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB42F51E409F16000C4BC9 /* LoginViewModel.swift */; };
+		E6AB42F81E409F3D000C4BC9 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB42F71E409F3D000C4BC9 /* LoginModel.swift */; };
+		E6AB42FD1E409FBE000C4BC9 /* ReposViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB42FC1E409FBE000C4BC9 /* ReposViewModel.swift */; };
+		E6AB42FF1E40A013000C4BC9 /* ReposViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB42FE1E40A013000C4BC9 /* ReposViewController.swift */; };
+		E6AB43011E40A047000C4BC9 /* ReposModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB43001E40A047000C4BC9 /* ReposModel.swift */; };
+		E6AB43031E40A0C0000C4BC9 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6AB43021E40A0C0000C4BC9 /* Login.storyboard */; };
+		E6AB43051E40B595000C4BC9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB43041E40B595000C4BC9 /* Constants.swift */; };
+		E6AB43081E41D892000C4BC9 /* GitHubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB43071E41D892000C4BC9 /* GitHubService.swift */; };
+		E6AB430A1E41F00C000C4BC9 /* Repos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6AB43091E41F00C000C4BC9 /* Repos.storyboard */; };
 		E6DA87A71E38ACB6009CFF30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DA87A61E38ACB6009CFF30 /* AppDelegate.swift */; };
 		E6DA87AC1E38ACB6009CFF30 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6DA87AA1E38ACB6009CFF30 /* Main.storyboard */; };
 		E6DA87AF1E38ACB6009CFF30 /* ReactiveTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E6DA87AD1E38ACB6009CFF30 /* ReactiveTest.xcdatamodeld */; };
@@ -16,10 +25,6 @@
 		E6DA87B41E38ACB6009CFF30 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6DA87B21E38ACB6009CFF30 /* LaunchScreen.storyboard */; };
 		E6DA87BF1E38ACB7009CFF30 /* ReactiveTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DA87BE1E38ACB7009CFF30 /* ReactiveTestTests.swift */; };
 		E6DA87CA1E38ACB7009CFF30 /* ReactiveTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DA87C91E38ACB7009CFF30 /* ReactiveTestUITests.swift */; };
-		E6EB12701E38CFC2008A7451 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EB126F1E38CFC2008A7451 /* MainViewController.swift */; };
-		E6EB12721E38D070008A7451 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EB12711E38D070008A7451 /* MainViewModel.swift */; };
-		E6EB12941E38E1F4008A7451 /* Episode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EB128E1E38E1F4008A7451 /* Episode.swift */; };
-		E6EB12981E38E1F4008A7451 /* Season.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EB12921E38E1F4008A7451 /* Season.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +48,16 @@
 		109636A327E74FF4DA9223AA /* Pods-ReactiveTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveTest/Pods-ReactiveTest.release.xcconfig"; sourceTree = "<group>"; };
 		1727013D4D6A06485A35D09C /* Pods-ReactiveTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveTest/Pods-ReactiveTest.debug.xcconfig"; sourceTree = "<group>"; };
 		D20025F18A8E80A3806C3DA5 /* Pods_ReactiveTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReactiveTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E609120B1E38ECC400DBEF6A /* Series.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Series.swift; path = MainScreen/Model/Series.swift; sourceTree = "<group>"; };
+		E6AB42F31E409EDD000C4BC9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Screens/Login/View/LoginViewController.swift; sourceTree = "<group>"; };
+		E6AB42F51E409F16000C4BC9 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewModel.swift; path = Screens/Login/ViewModel/LoginViewModel.swift; sourceTree = "<group>"; };
+		E6AB42F71E409F3D000C4BC9 /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginModel.swift; path = Screens/Login/Model/LoginModel.swift; sourceTree = "<group>"; };
+		E6AB42FC1E409FBE000C4BC9 /* ReposViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReposViewModel.swift; path = Screens/Repos/ViewModel/ReposViewModel.swift; sourceTree = "<group>"; };
+		E6AB42FE1E40A013000C4BC9 /* ReposViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReposViewController.swift; path = Screens/Repos/View/ReposViewController.swift; sourceTree = "<group>"; };
+		E6AB43001E40A047000C4BC9 /* ReposModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReposModel.swift; path = Screens/Repos/ReposModel/ReposModel.swift; sourceTree = "<group>"; };
+		E6AB43021E40A0C0000C4BC9 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = Screens/Login/View/Login.storyboard; sourceTree = "<group>"; };
+		E6AB43041E40B595000C4BC9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E6AB43071E41D892000C4BC9 /* GitHubService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubService.swift; path = Services/GitHubService.swift; sourceTree = "<group>"; };
+		E6AB43091E41F00C000C4BC9 /* Repos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Repos.storyboard; path = Screens/Repos/View/Repos.storyboard; sourceTree = "<group>"; };
 		E6DA87A31E38ACB6009CFF30 /* ReactiveTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactiveTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6DA87A61E38ACB6009CFF30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6DA87AB1E38ACB6009CFF30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -57,10 +71,6 @@
 		E6DA87C51E38ACB7009CFF30 /* ReactiveTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactiveTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6DA87C91E38ACB7009CFF30 /* ReactiveTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveTestUITests.swift; sourceTree = "<group>"; };
 		E6DA87CB1E38ACB7009CFF30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E6EB126F1E38CFC2008A7451 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = MainScreen/View/MainViewController.swift; sourceTree = "<group>"; };
-		E6EB12711E38D070008A7451 /* MainViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewModel.swift; path = MainScreen/ViewModel/MainViewModel.swift; sourceTree = "<group>"; };
-		E6EB128E1E38E1F4008A7451 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Episode.swift; path = CoreDataModels/Episode.swift; sourceTree = "<group>"; };
-		E6EB12921E38E1F4008A7451 /* Season.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Season.swift; path = CoreDataModels/Season.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +116,93 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		E6AB42ED1E409CDA000C4BC9 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				E6AB42F01E409E60000C4BC9 /* Model */,
+				E6AB42F11E409E74000C4BC9 /* View */,
+				E6AB42F21E409E80000C4BC9 /* ViewModel */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		E6AB42EE1E409CEF000C4BC9 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				E6AB42EF1E409D28000C4BC9 /* Repos */,
+				E6AB42ED1E409CDA000C4BC9 /* Login */,
+			);
+			name = Screens;
+			sourceTree = "<group>";
+		};
+		E6AB42EF1E409D28000C4BC9 /* Repos */ = {
+			isa = PBXGroup;
+			children = (
+				E6AB42FB1E409F72000C4BC9 /* Model */,
+				E6AB42FA1E409F6A000C4BC9 /* View */,
+				E6AB42F91E409F5C000C4BC9 /* ViewModel */,
+			);
+			name = Repos;
+			sourceTree = "<group>";
+		};
+		E6AB42F01E409E60000C4BC9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E6AB42F71E409F3D000C4BC9 /* LoginModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		E6AB42F11E409E74000C4BC9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E6AB42F31E409EDD000C4BC9 /* LoginViewController.swift */,
+				E6AB43021E40A0C0000C4BC9 /* Login.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		E6AB42F21E409E80000C4BC9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E6AB42F51E409F16000C4BC9 /* LoginViewModel.swift */,
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		E6AB42F91E409F5C000C4BC9 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E6AB42FC1E409FBE000C4BC9 /* ReposViewModel.swift */,
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		E6AB42FA1E409F6A000C4BC9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E6AB42FE1E40A013000C4BC9 /* ReposViewController.swift */,
+				E6AB43091E41F00C000C4BC9 /* Repos.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		E6AB42FB1E409F72000C4BC9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E6AB43001E40A047000C4BC9 /* ReposModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		E6AB43061E41D86A000C4BC9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E6AB43071E41D892000C4BC9 /* GitHubService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		E6DA879A1E38ACB6009CFF30 = {
 			isa = PBXGroup;
 			children = (
@@ -131,14 +228,16 @@
 		E6DA87A51E38ACB6009CFF30 /* ReactiveTest */ = {
 			isa = PBXGroup;
 			children = (
+				E6AB43061E41D86A000C4BC9 /* Services */,
 				E6EB12811E38E07A008A7451 /* CoreData Models */,
-				E6EB126B1E38CF23008A7451 /* MainScreen */,
+				E6AB42EE1E409CEF000C4BC9 /* Screens */,
 				E6DA87A61E38ACB6009CFF30 /* AppDelegate.swift */,
 				E6DA87AA1E38ACB6009CFF30 /* Main.storyboard */,
 				E6DA87B01E38ACB6009CFF30 /* Assets.xcassets */,
 				E6DA87B21E38ACB6009CFF30 /* LaunchScreen.storyboard */,
 				E6DA87B51E38ACB6009CFF30 /* Info.plist */,
 				E6DA87AD1E38ACB6009CFF30 /* ReactiveTest.xcdatamodeld */,
+				E6AB43041E40B595000C4BC9 /* Constants.swift */,
 			);
 			path = ReactiveTest;
 			sourceTree = "<group>";
@@ -161,45 +260,9 @@
 			path = ReactiveTestUITests;
 			sourceTree = "<group>";
 		};
-		E6EB126B1E38CF23008A7451 /* MainScreen */ = {
-			isa = PBXGroup;
-			children = (
-				E6EB126E1E38CF5A008A7451 /* ViewModel */,
-				E6EB126D1E38CF50008A7451 /* View */,
-				E6EB126C1E38CF44008A7451 /* Model */,
-			);
-			name = MainScreen;
-			sourceTree = "<group>";
-		};
-		E6EB126C1E38CF44008A7451 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				E609120B1E38ECC400DBEF6A /* Series.swift */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		E6EB126D1E38CF50008A7451 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				E6EB126F1E38CFC2008A7451 /* MainViewController.swift */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		E6EB126E1E38CF5A008A7451 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				E6EB12711E38D070008A7451 /* MainViewModel.swift */,
-			);
-			name = ViewModel;
-			sourceTree = "<group>";
-		};
 		E6EB12811E38E07A008A7451 /* CoreData Models */ = {
 			isa = PBXGroup;
 			children = (
-				E6EB128E1E38E1F4008A7451 /* Episode.swift */,
-				E6EB12921E38E1F4008A7451 /* Season.swift */,
 			);
 			name = "CoreData Models";
 			sourceTree = "<group>";
@@ -317,6 +380,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6AB430A1E41F00C000C4BC9 /* Repos.storyboard in Resources */,
+				E6AB43031E40A0C0000C4BC9 /* Login.storyboard in Resources */,
 				E6DA87B41E38ACB6009CFF30 /* LaunchScreen.storyboard in Resources */,
 				E6DA87B11E38ACB6009CFF30 /* Assets.xcassets in Resources */,
 				E6DA87AC1E38ACB6009CFF30 /* Main.storyboard in Resources */,
@@ -392,13 +457,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E6EB12721E38D070008A7451 /* MainViewModel.swift in Sources */,
+				E6AB42FF1E40A013000C4BC9 /* ReposViewController.swift in Sources */,
+				E6AB43051E40B595000C4BC9 /* Constants.swift in Sources */,
+				E6AB43011E40A047000C4BC9 /* ReposModel.swift in Sources */,
+				E6AB42F81E409F3D000C4BC9 /* LoginModel.swift in Sources */,
 				E6DA87A71E38ACB6009CFF30 /* AppDelegate.swift in Sources */,
-				E609120C1E38ECC400DBEF6A /* Series.swift in Sources */,
-				E6EB12941E38E1F4008A7451 /* Episode.swift in Sources */,
-				E6EB12981E38E1F4008A7451 /* Season.swift in Sources */,
+				E6AB42F61E409F16000C4BC9 /* LoginViewModel.swift in Sources */,
+				E6AB42FD1E409FBE000C4BC9 /* ReposViewModel.swift in Sources */,
 				E6DA87AF1E38ACB6009CFF30 /* ReactiveTest.xcdatamodeld in Sources */,
-				E6EB12701E38CFC2008A7451 /* MainViewController.swift in Sources */,
+				E6AB42F41E409EDD000C4BC9 /* LoginViewController.swift in Sources */,
+				E6AB43081E41D892000C4BC9 /* GitHubService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
