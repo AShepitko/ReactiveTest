@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
             return (text?.characters.count)! > 0
         })
         
-        passwordTextField.rx.text.bindNext { text in
+        passwordTextField.rx.text.bindNext { [unowned self] text in
             if let text = text {
                 self.viewModel.password.value = text
             }
@@ -47,18 +47,27 @@ class LoginViewController: UIViewController {
         }.bindTo(loginButton.rx.isEnabled).addDisposableTo(disposeBag)
         
         loginButton.rx.tap.subscribe(onNext: { () in
-            self.viewModel.login().subscribeOn(MainScheduler.instance).subscribe(onNext: { authenticated in
+            self.viewModel.login().subscribeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] user in
+                let authenticated = (user != nil)
                 self.errorLabel.isHidden = authenticated
                 if authenticated {
+                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                        appDelegate.username = self.viewModel.username.value
+                        appDelegate.password = self.viewModel.password.value
+                    }
+                    
                     let reposStoryboard = UIStoryboard(name: "Repos", bundle: nil)
-                    if let reposNavigationController = reposStoryboard.instantiateInitialViewController() {
+                    if let reposNavigationController = reposStoryboard.instantiateInitialViewController() as? UINavigationController {
+                        if let reposController = reposNavigationController.viewControllers[0] as? ReposViewController {
+                            reposController.user = user
+                        }
                         self.present(reposNavigationController, animated: true, completion: nil)
                     }
                 }
                 else {
                     self.errorLabel.text = NSLocalizedString("Unauthorized", comment: "")
                 }
-            }, onError: { error in
+            }, onError: { [unowned self] error in
                 self.errorLabel.isHidden = false
                 self.errorLabel.text = "Error: \(error)"
             }).addDisposableTo(self.disposeBag)

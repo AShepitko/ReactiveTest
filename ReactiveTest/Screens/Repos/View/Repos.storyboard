@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -28,7 +29,7 @@
         <!--Repos View Controller-->
         <scene sceneID="Idr-4Z-xoA">
             <objects>
-                <viewController storyboardIdentifier="ReposViewController" id="A5V-gK-Ua0" customClass="ReposViewController" customModule="ReactiveTest" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReposViewController" automaticallyAdjustsScrollViewInsets="NO" id="A5V-gK-Ua0" customClass="ReposViewController" customModule="ReactiveTest" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rqs-LX-e9K"/>
                         <viewControllerLayoutGuide type="bottom" id="e8n-Df-bgv"/>
@@ -36,9 +37,50 @@
                     <view key="view" contentMode="scaleToFill" id="AHZ-k0-WrZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dZ2-yW-NT0">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RepoTableViewCell" id="6zU-Kl-aU0" customClass="RepoTableViewCell" customModule="ReactiveTest" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6zU-Kl-aU0" id="Hs5-eL-g9J">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kdu-9q-H7a">
+                                                    <rect key="frame" x="8" y="11" width="359" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="kdu-9q-H7a" secondAttribute="trailing" id="P9B-ll-jM6"/>
+                                                <constraint firstItem="kdu-9q-H7a" firstAttribute="centerY" secondItem="Hs5-eL-g9J" secondAttribute="centerY" id="d3T-fS-qYY"/>
+                                                <constraint firstItem="kdu-9q-H7a" firstAttribute="leading" secondItem="Hs5-eL-g9J" secondAttribute="leadingMargin" id="kwV-GU-ZH8"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="nameLabel" destination="kdu-9q-H7a" id="zVc-Nf-f5e"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="dZ2-yW-NT0" secondAttribute="trailing" id="5b1-gN-LCC"/>
+                            <constraint firstItem="dZ2-yW-NT0" firstAttribute="leading" secondItem="AHZ-k0-WrZ" secondAttribute="leading" id="6Tt-Zy-3Do"/>
+                            <constraint firstItem="dZ2-yW-NT0" firstAttribute="top" secondItem="rqs-LX-e9K" secondAttribute="bottom" id="Ln1-PH-Q26"/>
+                            <constraint firstItem="e8n-Df-bgv" firstAttribute="top" secondItem="dZ2-yW-NT0" secondAttribute="bottom" id="RCc-JG-ESY"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="bK7-Un-Kv2"/>
+                    <connections>
+                        <outlet property="tableView" destination="dZ2-yW-NT0" id="dXl-mu-TYi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rLJ-ri-CI3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

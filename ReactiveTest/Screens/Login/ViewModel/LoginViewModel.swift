@@ -11,20 +11,16 @@ import RxSwift
 
 class LoginViewModel {
     
-    enum LoginErrors: Error {
-        case InvalidCredentials
-    }
-    
     var username: Variable<String> = Variable("")
     var password: Variable<String> = Variable("")
     
-    var model = LoginModel()
+    let model = LoginModel()
     
-    func login() -> Observable<Bool> {
-        return Observable<Bool>.create({ [unowned self] (observer) -> Disposable in
+    func login() -> Observable<User?> {
+        return Observable<User?>.create({ [unowned self] (observer) -> Disposable in
             
-            self.model.login(withUsername: self.username.value, withPassword: self.password.value, complete: { success in
-                observer.onNext(success)
+            self.model.login(withUsername: self.username.value, withPassword: self.password.value, complete: { user in
+                observer.onNext(user)
                 observer.onCompleted()
             }, error: { error in
                 observer.onError(error)
