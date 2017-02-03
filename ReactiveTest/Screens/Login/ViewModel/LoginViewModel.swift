@@ -16,8 +16,8 @@ class LoginViewModel {
     
     let model = LoginModel()
     
-    func login() -> Observable<User?> {
-        return Observable<User?>.create({ [unowned self] (observer) -> Disposable in
+    func login() -> Observable<User> {
+        return Observable<User>.create({ [unowned self] (observer) -> Disposable in
             
             self.model.login(withUsername: self.username.value, withPassword: self.password.value, complete: { user in
                 observer.onNext(user)

@@ -48,24 +48,17 @@ class LoginViewController: UIViewController {
         
         loginButton.rx.tap.subscribe(onNext: { () in
             self.viewModel.login().subscribeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] user in
-                let authenticated = (user != nil)
-                self.errorLabel.isHidden = authenticated
-                if authenticated {
-                    if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                        appDelegate.username = self.viewModel.username.value
-                        appDelegate.password = self.viewModel.password.value
-                    }
-                    
-                    let reposStoryboard = UIStoryboard(name: "Repos", bundle: nil)
-                    if let reposNavigationController = reposStoryboard.instantiateInitialViewController() as? UINavigationController {
-                        if let reposController = reposNavigationController.viewControllers[0] as? ReposViewController {
-                            reposController.user = user
-                        }
-                        self.present(reposNavigationController, animated: true, completion: nil)
-                    }
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    appDelegate.username = self.viewModel.username.value
+                    appDelegate.password = self.viewModel.password.value
                 }
-                else {
-                    self.errorLabel.text = NSLocalizedString("Unauthorized", comment: "")
+                
+                let reposStoryboard = UIStoryboard(name: "Repos", bundle: nil)
+                if let reposNavigationController = reposStoryboard.instantiateInitialViewController() as? UINavigationController {
+                    if let reposController = reposNavigationController.viewControllers[0] as? ReposViewController {
+                        reposController.user = user
+                    }
+                    self.present(reposNavigationController, animated: true, completion: nil)
                 }
             }, onError: { [unowned self] error in
                 self.errorLabel.isHidden = false
