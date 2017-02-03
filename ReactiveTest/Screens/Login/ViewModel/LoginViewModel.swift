@@ -11,21 +11,21 @@ import RxSwift
 
 class LoginViewModel {
     
-    var username: Variable<String> = Variable("")
-    var password: Variable<String> = Variable("")
+    private let model = LoginModel()
     
-    let model = LoginModel()
+    let user = Variable<User?>(nil)
+    let error = Variable<Error?>(nil)
     
-    func login() -> Observable<User> {
-        return Observable<User>.create({ [unowned self] (observer) -> Disposable in
-            
-            self.model.login(withUsername: self.username.value, withPassword: self.password.value, complete: { user in
-                observer.onNext(user)
+    func login(username: String, password: String) -> Observable<Void> {
+        return Observable.create({ [unowned self] (observer) -> Disposable in
+            self.model.login(withUsername: username, withPassword: password, complete: { [unowned self] user in
+                self.user.value = user
+                observer.onNext()
                 observer.onCompleted()
-            }, error: { error in
+            }, error: { [unowned self] error in
+                self.error.value = error
                 observer.onError(error)
             })
-            
             return Disposables.create()
         })
     }

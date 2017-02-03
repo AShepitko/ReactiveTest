@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import MBProgressHUD
 
 class LoginViewController: UIViewController {
 
@@ -24,45 +25,63 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        usernameTextField.rx.text.bindNext { [unowned self] text in
-            if let text = text {
-                self.viewModel.username.value = text
+        viewModel.user.asDriver().drive(onNext: { user in
+            guard let user = user else {
+                return
             }
-        }.addDisposableTo(disposeBag)
+            guard let username = self.usernameTextField.text else {
+                return
+            }
+            guard let password = self.passwordTextField.text else {
+                return
+            }
+            
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                appDelegate.username = username
+                appDelegate.password = password
+            }
+            
+            let reposStoryboard = UIStoryboard(name: "Repos", bundle: nil)
+            if let reposNavigationController = reposStoryboard.instantiateInitialViewController() as? UINavigationController {
+                if let reposController = reposNavigationController.viewControllers[0] as? ReposViewController {
+                    reposController.user = user
+                }
+                self.present(reposNavigationController, animated: true, completion: nil)
+            }
+        }).addDisposableTo(disposeBag)
+        
+        viewModel.error.asDriver().drive(onNext: { error in
+            guard let error = error else {
+                self.errorLabel.isHidden = true
+                return
+            }
+            self.errorLabel.isHidden = false
+            self.errorLabel.text = "Error: \(error)"
+        }).addDisposableTo(disposeBag)
+        
         let usernameValidObserver = usernameTextField.rx.text.map({ (text) -> Bool in
             return (text?.characters.count)! > 0
         })
-        
-        passwordTextField.rx.text.bindNext { [unowned self] text in
-            if let text = text {
-                self.viewModel.password.value = text
-            }
-        }.addDisposableTo(disposeBag)
         let passwordValidObserver = passwordTextField.rx.text.map({ (text) -> Bool in
             return (text?.characters.count)! > 0
         })
-        
         Observable.combineLatest(usernameValidObserver, passwordValidObserver) { (v1, v2) -> Bool in
             return v1 && v2
         }.bindTo(loginButton.rx.isEnabled).addDisposableTo(disposeBag)
         
-        loginButton.rx.tap.subscribe(onNext: { () in
-            self.viewModel.login().subscribeOn(MainScheduler.instance).subscribe(onNext: { [unowned self] user in
-                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                    appDelegate.username = self.viewModel.username.value
-                    appDelegate.password = self.viewModel.password.value
-                }
-                
-                let reposStoryboard = UIStoryboard(name: "Repos", bundle: nil)
-                if let reposNavigationController = reposStoryboard.instantiateInitialViewController() as? UINavigationController {
-                    if let reposController = reposNavigationController.viewControllers[0] as? ReposViewController {
-                        reposController.user = user
-                    }
-                    self.present(reposNavigationController, animated: true, completion: nil)
-                }
-            }, onError: { [unowned self] error in
-                self.errorLabel.isHidden = false
-                self.errorLabel.text = "Error: \(error)"
+        loginButton.rx.tap.subscribe(onNext: { [unowned self] () in
+            guard let username = self.usernameTextField.text else {
+                return
+            }
+            guard let password = self.passwordTextField.text else {
+                return
+            }
+
+            MBProgressHUD.showAdded(to: self.view, animated: true)
+            self.viewModel.login(username: username, password: password).subscribe(onError: { [unowned self] error in
+                MBProgressHUD.hide(for: self.view, animated: true)
+            }, onCompleted: { [unowned self] in
+                MBProgressHUD.hide(for: self.view, animated: true)
             }).addDisposableTo(self.disposeBag)
         }).addDisposableTo(disposeBag)
     }

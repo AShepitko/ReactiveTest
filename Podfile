@@ -13,4 +13,6 @@ target 'ReactiveTest' do
   pod 'Moya', '~> 8.0'
   pod 'Moya/RxSwift'
 
+  pod 'MBProgressHUD', '~> 1.0'
+  
 end
