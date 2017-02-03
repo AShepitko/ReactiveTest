@@ -24,10 +24,37 @@ class ReposViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+
         if let user = user {
-            modelView.fetchRepos(forUser: user).bindTo(tableView.rx.items(cellIdentifier: "RepoTableViewCell", cellType: RepoTableViewCell.self)) { index, repo, cell in
+            appDelegate.username = user.login! + "1" //TODO: simulate auth failure
+
+            modelView.repos.asDriver().asObservable().bindTo(tableView.rx.items(cellIdentifier: "RepoTableViewCell", cellType: RepoTableViewCell.self)) { index, repo, cell in
                 cell.nameLabel.text = repo.name
             }.addDisposableTo(disposeBag)
+            
+            modelView.error.asDriver().asObservable().subscribe(onNext: { error in
+                guard let error = error else {
+                    return
+                }
+                
+                let alertController = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
+                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                alertController.addAction(defaultAction)
+                self.present(alertController, animated: true, completion: nil)
+            }).addDisposableTo(disposeBag)
+            
+            let refreshItem = UIBarButtonItem(title: "R", style: .plain, target: self, action: nil)
+            refreshItem.rx.tap.subscribe(onNext: { [unowned self] in
+                appDelegate.username = user.login! //TODO: fix simulated auth failure
+
+                self.modelView.fetchRepos(forUser: user)
+            }).addDisposableTo(disposeBag)
+            self.navigationItem.rightBarButtonItems = [ refreshItem ]
+            
+            self.modelView.fetchRepos(forUser: user)
         }
     }
 
@@ -36,4 +63,6 @@ class ReposViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    
+    
 }

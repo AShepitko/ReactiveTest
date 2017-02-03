@@ -26,7 +26,7 @@ class ReposModel {
         complete(repos)
         
         // fetch server data
-        let provider = RxMoyaProvider<GitHubService>(plugins: [ BasicAuthPlugin(username: appDelegate.username, password: "appDelegate.password") ])
+        let provider = RxMoyaProvider<GitHubService>(plugins: [ BasicAuthPlugin(username: appDelegate.username, password: appDelegate.password) ])
         provider.request(.getRepos).filterSuccessfulStatusCodes().subscribe(onNext: { response in
             var serverRepos = [Repo]()
             let jsonRepos = JSON(response.data)

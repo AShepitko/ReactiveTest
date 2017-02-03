@@ -13,16 +13,14 @@ class ReposViewModel {
 
     private let model = ReposModel()
     
-    func fetchRepos(forUser user: User) -> Observable<[Repo]> {
-        return Observable<[Repo]>.create({ [unowned self] (observer) -> Disposable in
-            
-            self.model.fetchRepos(forUser: user, complete: { repos in
-                observer.onNext(repos)
-            }, error: { error in
-                observer.onError(error)
-            })
-            
-            return Disposables.create()
+    let repos = Variable<[Repo]>([])
+    let error = Variable<Error?>(nil)
+    
+    func fetchRepos(forUser user: User) {
+        self.model.fetchRepos(forUser: user, complete: { [unowned self] repos in
+            self.repos.value = repos
+        }, error: { [unowned self] error in
+            self.error.value = error
         })
     }
     
