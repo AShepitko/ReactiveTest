@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		40DCA4EF19621DD49508285D /* Pods_ReactiveTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D20025F18A8E80A3806C3DA5 /* Pods_ReactiveTest.framework */; };
+		E61F0E671E4884030093EDC6 /* RepoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F0E661E4884030093EDC6 /* RepoViewController.swift */; };
+		E61F0E691E4884420093EDC6 /* RepoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F0E681E4884420093EDC6 /* RepoViewModel.swift */; };
+		E61F0E6E1E4884960093EDC6 /* RepoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F0E6C1E4884960093EDC6 /* RepoModel.swift */; };
+		E61F0E6F1E4884960093EDC6 /* ReposModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F0E6D1E4884960093EDC6 /* ReposModel.swift */; };
 		E628567B1E422DE0000CCED1 /* RepoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628567A1E422DE0000CCED1 /* RepoTableViewCell.swift */; };
 		E628567D1E4353B3000CCED1 /* DatesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E628567C1E4353B3000CCED1 /* DatesService.swift */; };
 		E6AB42F41E409EDD000C4BC9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB42F31E409EDD000C4BC9 /* LoginViewController.swift */; };
@@ -15,7 +19,6 @@
 		E6AB42F81E409F3D000C4BC9 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB42F71E409F3D000C4BC9 /* LoginModel.swift */; };
 		E6AB42FD1E409FBE000C4BC9 /* ReposViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB42FC1E409FBE000C4BC9 /* ReposViewModel.swift */; };
 		E6AB42FF1E40A013000C4BC9 /* ReposViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB42FE1E40A013000C4BC9 /* ReposViewController.swift */; };
-		E6AB43011E40A047000C4BC9 /* ReposModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB43001E40A047000C4BC9 /* ReposModel.swift */; };
 		E6AB43031E40A0C0000C4BC9 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6AB43021E40A0C0000C4BC9 /* Login.storyboard */; };
 		E6AB43051E40B595000C4BC9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB43041E40B595000C4BC9 /* Constants.swift */; };
 		E6AB43081E41D892000C4BC9 /* GitHubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB43071E41D892000C4BC9 /* GitHubService.swift */; };
@@ -50,6 +53,10 @@
 		109636A327E74FF4DA9223AA /* Pods-ReactiveTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveTest/Pods-ReactiveTest.release.xcconfig"; sourceTree = "<group>"; };
 		1727013D4D6A06485A35D09C /* Pods-ReactiveTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveTest/Pods-ReactiveTest.debug.xcconfig"; sourceTree = "<group>"; };
 		D20025F18A8E80A3806C3DA5 /* Pods_ReactiveTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReactiveTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E61F0E661E4884030093EDC6 /* RepoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepoViewController.swift; path = Screens/Repos/View/RepoViewController.swift; sourceTree = "<group>"; };
+		E61F0E681E4884420093EDC6 /* RepoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepoViewModel.swift; path = Screens/Repos/ViewModel/RepoViewModel.swift; sourceTree = "<group>"; };
+		E61F0E6C1E4884960093EDC6 /* RepoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepoModel.swift; path = Screens/Repos/Model/RepoModel.swift; sourceTree = "<group>"; };
+		E61F0E6D1E4884960093EDC6 /* ReposModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReposModel.swift; path = Screens/Repos/Model/ReposModel.swift; sourceTree = "<group>"; };
 		E628567A1E422DE0000CCED1 /* RepoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepoTableViewCell.swift; path = Screens/Repos/View/RepoTableViewCell.swift; sourceTree = "<group>"; };
 		E628567C1E4353B3000CCED1 /* DatesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DatesService.swift; path = Services/DatesService.swift; sourceTree = "<group>"; };
 		E6AB42F31E409EDD000C4BC9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Screens/Login/View/LoginViewController.swift; sourceTree = "<group>"; };
@@ -57,7 +64,6 @@
 		E6AB42F71E409F3D000C4BC9 /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginModel.swift; path = Screens/Login/Model/LoginModel.swift; sourceTree = "<group>"; };
 		E6AB42FC1E409FBE000C4BC9 /* ReposViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReposViewModel.swift; path = Screens/Repos/ViewModel/ReposViewModel.swift; sourceTree = "<group>"; };
 		E6AB42FE1E40A013000C4BC9 /* ReposViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReposViewController.swift; path = Screens/Repos/View/ReposViewController.swift; sourceTree = "<group>"; };
-		E6AB43001E40A047000C4BC9 /* ReposModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReposModel.swift; path = Screens/Repos/ReposModel/ReposModel.swift; sourceTree = "<group>"; };
 		E6AB43021E40A0C0000C4BC9 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Login.storyboard; path = Screens/Login/View/Login.storyboard; sourceTree = "<group>"; };
 		E6AB43041E40B595000C4BC9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E6AB43071E41D892000C4BC9 /* GitHubService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubService.swift; path = Services/GitHubService.swift; sourceTree = "<group>"; };
@@ -178,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				E6AB42FC1E409FBE000C4BC9 /* ReposViewModel.swift */,
+				E61F0E681E4884420093EDC6 /* RepoViewModel.swift */,
 			);
 			name = ViewModel;
 			sourceTree = "<group>";
@@ -188,6 +195,7 @@
 				E6AB42FE1E40A013000C4BC9 /* ReposViewController.swift */,
 				E6AB43091E41F00C000C4BC9 /* Repos.storyboard */,
 				E628567A1E422DE0000CCED1 /* RepoTableViewCell.swift */,
+				E61F0E661E4884030093EDC6 /* RepoViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -195,7 +203,8 @@
 		E6AB42FB1E409F72000C4BC9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E6AB43001E40A047000C4BC9 /* ReposModel.swift */,
+				E61F0E6C1E4884960093EDC6 /* RepoModel.swift */,
+				E61F0E6D1E4884960093EDC6 /* ReposModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -456,10 +465,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6AB42FF1E40A013000C4BC9 /* ReposViewController.swift in Sources */,
+				E61F0E6F1E4884960093EDC6 /* ReposModel.swift in Sources */,
+				E61F0E6E1E4884960093EDC6 /* RepoModel.swift in Sources */,
 				E6AB43051E40B595000C4BC9 /* Constants.swift in Sources */,
-				E6AB43011E40A047000C4BC9 /* ReposModel.swift in Sources */,
+				E61F0E691E4884420093EDC6 /* RepoViewModel.swift in Sources */,
 				E6AB42F81E409F3D000C4BC9 /* LoginModel.swift in Sources */,
 				E628567B1E422DE0000CCED1 /* RepoTableViewCell.swift in Sources */,
+				E61F0E671E4884030093EDC6 /* RepoViewController.swift in Sources */,
 				E6DA87A71E38ACB6009CFF30 /* AppDelegate.swift in Sources */,
 				E6AB42F61E409F16000C4BC9 /* LoginViewModel.swift in Sources */,
 				E6AB42FD1E409FBE000C4BC9 /* ReposViewModel.swift in Sources */,

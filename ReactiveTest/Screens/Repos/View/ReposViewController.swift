@@ -13,6 +13,10 @@ import RxDataSources
 
 class ReposViewController: UIViewController {
     
+    enum Segues {
+        static let repoSegue = "ShowRepoSegueID"
+    }
+    
     @IBOutlet weak var tableView: UITableView!
     
     var user: User?
@@ -34,6 +38,10 @@ class ReposViewController: UIViewController {
             modelView.repos.asDriver().asObservable().bindTo(tableView.rx.items(cellIdentifier: "RepoTableViewCell", cellType: RepoTableViewCell.self)) { index, repo, cell in
                 cell.nameLabel.text = repo.name
             }.addDisposableTo(disposeBag)
+            
+            tableView.rx.modelSelected(Repo.self).asDriver().drive(onNext: { [unowned self] repo in
+                self.performSegue(withIdentifier: Segues.repoSegue, sender: repo)
+            }).addDisposableTo(disposeBag)
             
             modelView.error.asDriver().asObservable().subscribe(onNext: { error in
                 guard let error = error else {
@@ -63,6 +71,12 @@ class ReposViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Segues.repoSegue {
+            if let destinationController = segue.destination as? RepoViewController {
+                destinationController.repo = sender as? Repo
+            }
+        }
+    }
     
 }

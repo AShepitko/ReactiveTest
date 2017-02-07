@@ -12,6 +12,7 @@ import Moya
 enum GitHubService {
     case getUser
     case getRepos
+    case getRepo(user: String, repo: String)
 }
 
 extension GitHubService: TargetType {
@@ -23,17 +24,19 @@ extension GitHubService: TargetType {
                 return "/user"
             case .getRepos:
                 return "/user/repos"
+            case .getRepo(let user, let repo):
+                return "repos/\(user)/\(repo)"
         }
     }
     var method: Moya.Method {
         switch self {
-            case .getUser, .getRepos:
+            case .getUser, .getRepos, .getRepo:
                 return .get
         }
     }
     var parameters: [String: Any]? {
         switch self {
-            case .getUser, .getRepos:
+            case .getUser, .getRepos, .getRepo:
                 return nil
         }
     }
@@ -46,11 +49,13 @@ extension GitHubService: TargetType {
                 return "{}".utf8Encoded
             case .getRepos:
                 return "[]".utf8Encoded
+            case .getRepo:
+                return "{}".utf8Encoded
         }
     }
     var task: Task {
         switch self {
-            case .getUser, .getRepos:
+            case .getUser, .getRepos, .getRepo:
                 return .request
         }
     }
