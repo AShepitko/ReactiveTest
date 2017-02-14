@@ -17,7 +17,7 @@ class LoginModel {
     let disposeBag = DisposeBag()
     
     func login(withUsername username: String, withPassword password:String, complete: @escaping (User) -> Void, error: @escaping (Swift.Error) -> Void) {
-        let provider = RxMoyaProvider<GitHubService>(plugins: [ BasicAuthPlugin(username: username, password: password) ])
+        let provider = RxMoyaProvider<GitHubService>(plugins: [ BasicAuthPlugin(username: username, password: password), JsonNetworkLoggerPlugin() ])
         provider.request(.getUser).filterSuccessfulStatusCodes().subscribe(onNext: { response in
             let json = JSON(response.data)
             let serverID = json["id"].intValue

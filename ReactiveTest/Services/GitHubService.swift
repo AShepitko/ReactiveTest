@@ -8,6 +8,7 @@
 
 import Foundation
 import Moya
+import Result
 
 enum GitHubService {
     case getUser
@@ -84,3 +85,69 @@ struct BasicAuthPlugin: PluginType {
         return request
     }
 }
+
+// MARK: - Network Logger
+struct JsonNetworkLoggerPlugin: PluginType {
+    
+    func willSend(_ request: RequestType, target: TargetType) {
+        if let urlRequest = request.request {
+            var output = "[REQUEST] \(urlRequest.httpMethod!) \(urlRequest.url!)\n"
+            output += "|-Headers:\n"
+            if let allHTTPHeaderFields = urlRequest.allHTTPHeaderFields {
+                for header in allHTTPHeaderFields {
+                    output += "\(header.key): \(header.value)\n"
+                }
+            }
+
+            output += "|-Body:\n"
+            if let httpBody = urlRequest.httpBody {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: httpBody, options: .allowFragments)
+                    let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+                    output += String(data: data, encoding: .utf8)!
+                    if !output.hasSuffix("\n") {
+                        output += "\n"
+                    }
+                } catch {
+                    output += "NOT JSON BODY\n"
+                }
+            }
+            output += "|------\n"
+            
+            print(output)
+        }
+    }
+    
+    func didReceive(_ result: Result<Moya.Response, MoyaError>, target: TargetType) {
+        var output = ""
+        switch result {
+        case .success(let response):
+            output = "[RESPONSE] \(response.statusCode) \(response.request!.url!)\n"
+            output += "|-Headers:\n"
+            if let urlResponse = response.response as? HTTPURLResponse {
+                for header in urlResponse.allHeaderFields {
+                    output += "\(header.key): \(header.value)\n"
+                }
+            }
+            
+            output += "|-Body:\n"
+            do {
+                let json = try JSONSerialization.jsonObject(with: response.data, options: .allowFragments)
+                let data = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+                output += String(data: data, encoding: .utf8)!
+                if !output.hasSuffix("\n") {
+                    output += "\n"
+                }
+            } catch {
+                output += "NOT JSON BODY\n"
+            }
+            output += "|------\n"
+        case .failure(let error):
+            output = "[RESPONSE] ERROR (\(error))\n"
+        }
+        print(output)
+    }
+
+    
+}
+
