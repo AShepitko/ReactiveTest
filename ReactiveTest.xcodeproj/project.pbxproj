@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		40DCA4EF19621DD49508285D /* Pods_ReactiveTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D20025F18A8E80A3806C3DA5 /* Pods_ReactiveTest.framework */; };
+		E61CFD471E52E73A00AB7C04 /* Repo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61CFD461E52E73A00AB7C04 /* Repo.swift */; };
+		E61CFD491E52E88200AB7C04 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61CFD481E52E88200AB7C04 /* User.swift */; };
 		E61F0E671E4884030093EDC6 /* RepoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F0E661E4884030093EDC6 /* RepoViewController.swift */; };
 		E61F0E691E4884420093EDC6 /* RepoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F0E681E4884420093EDC6 /* RepoViewModel.swift */; };
 		E61F0E6E1E4884960093EDC6 /* RepoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61F0E6C1E4884960093EDC6 /* RepoModel.swift */; };
@@ -25,7 +27,6 @@
 		E6AB430A1E41F00C000C4BC9 /* Repos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6AB43091E41F00C000C4BC9 /* Repos.storyboard */; };
 		E6DA87A71E38ACB6009CFF30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DA87A61E38ACB6009CFF30 /* AppDelegate.swift */; };
 		E6DA87AC1E38ACB6009CFF30 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6DA87AA1E38ACB6009CFF30 /* Main.storyboard */; };
-		E6DA87AF1E38ACB6009CFF30 /* ReactiveTest.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E6DA87AD1E38ACB6009CFF30 /* ReactiveTest.xcdatamodeld */; };
 		E6DA87B11E38ACB6009CFF30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6DA87B01E38ACB6009CFF30 /* Assets.xcassets */; };
 		E6DA87B41E38ACB6009CFF30 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6DA87B21E38ACB6009CFF30 /* LaunchScreen.storyboard */; };
 		E6DA87BF1E38ACB7009CFF30 /* ReactiveTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DA87BE1E38ACB7009CFF30 /* ReactiveTestTests.swift */; };
@@ -53,6 +54,8 @@
 		109636A327E74FF4DA9223AA /* Pods-ReactiveTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveTest/Pods-ReactiveTest.release.xcconfig"; sourceTree = "<group>"; };
 		1727013D4D6A06485A35D09C /* Pods-ReactiveTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactiveTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ReactiveTest/Pods-ReactiveTest.debug.xcconfig"; sourceTree = "<group>"; };
 		D20025F18A8E80A3806C3DA5 /* Pods_ReactiveTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ReactiveTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E61CFD461E52E73A00AB7C04 /* Repo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Repo.swift; path = Models/Repo.swift; sourceTree = "<group>"; };
+		E61CFD481E52E88200AB7C04 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		E61F0E661E4884030093EDC6 /* RepoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepoViewController.swift; path = Screens/Repos/View/RepoViewController.swift; sourceTree = "<group>"; };
 		E61F0E681E4884420093EDC6 /* RepoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepoViewModel.swift; path = Screens/Repos/ViewModel/RepoViewModel.swift; sourceTree = "<group>"; };
 		E61F0E6C1E4884960093EDC6 /* RepoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepoModel.swift; path = Screens/Repos/Model/RepoModel.swift; sourceTree = "<group>"; };
@@ -71,7 +74,6 @@
 		E6DA87A31E38ACB6009CFF30 /* ReactiveTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactiveTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6DA87A61E38ACB6009CFF30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6DA87AB1E38ACB6009CFF30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E6DA87AE1E38ACB6009CFF30 /* ReactiveTest.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ReactiveTest.xcdatamodel; sourceTree = "<group>"; };
 		E6DA87B01E38ACB6009CFF30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E6DA87B31E38ACB6009CFF30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E6DA87B51E38ACB6009CFF30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -124,6 +126,15 @@
 				109636A327E74FF4DA9223AA /* Pods-ReactiveTest.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E61CFD451E52E70800AB7C04 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E61CFD461E52E73A00AB7C04 /* Repo.swift */,
+				E61CFD481E52E88200AB7C04 /* User.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		E6AB42ED1E409CDA000C4BC9 /* Login */ = {
@@ -243,6 +254,7 @@
 		E6DA87A51E38ACB6009CFF30 /* ReactiveTest */ = {
 			isa = PBXGroup;
 			children = (
+				E61CFD451E52E70800AB7C04 /* Models */,
 				E6AB43061E41D86A000C4BC9 /* Services */,
 				E6AB42EE1E409CEF000C4BC9 /* Screens */,
 				E6DA87A61E38ACB6009CFF30 /* AppDelegate.swift */,
@@ -250,7 +262,6 @@
 				E6DA87B01E38ACB6009CFF30 /* Assets.xcassets */,
 				E6DA87B21E38ACB6009CFF30 /* LaunchScreen.storyboard */,
 				E6DA87B51E38ACB6009CFF30 /* Info.plist */,
-				E6DA87AD1E38ACB6009CFF30 /* ReactiveTest.xcdatamodeld */,
 				E6AB43041E40B595000C4BC9 /* Constants.swift */,
 			);
 			path = ReactiveTest;
@@ -468,6 +479,7 @@
 				E61F0E6F1E4884960093EDC6 /* ReposModel.swift in Sources */,
 				E61F0E6E1E4884960093EDC6 /* RepoModel.swift in Sources */,
 				E6AB43051E40B595000C4BC9 /* Constants.swift in Sources */,
+				E61CFD491E52E88200AB7C04 /* User.swift in Sources */,
 				E61F0E691E4884420093EDC6 /* RepoViewModel.swift in Sources */,
 				E6AB42F81E409F3D000C4BC9 /* LoginModel.swift in Sources */,
 				E628567B1E422DE0000CCED1 /* RepoTableViewCell.swift in Sources */,
@@ -475,8 +487,8 @@
 				E6DA87A71E38ACB6009CFF30 /* AppDelegate.swift in Sources */,
 				E6AB42F61E409F16000C4BC9 /* LoginViewModel.swift in Sources */,
 				E6AB42FD1E409FBE000C4BC9 /* ReposViewModel.swift in Sources */,
-				E6DA87AF1E38ACB6009CFF30 /* ReactiveTest.xcdatamodeld in Sources */,
 				E6AB42F41E409EDD000C4BC9 /* LoginViewController.swift in Sources */,
+				E61CFD471E52E73A00AB7C04 /* Repo.swift in Sources */,
 				E6AB43081E41D892000C4BC9 /* GitHubService.swift in Sources */,
 				E628567D1E4353B3000CCED1 /* DatesService.swift in Sources */,
 			);
@@ -752,19 +764,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		E6DA87AD1E38ACB6009CFF30 /* ReactiveTest.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				E6DA87AE1E38ACB6009CFF30 /* ReactiveTest.xcdatamodel */,
-			);
-			currentVersion = E6DA87AE1E38ACB6009CFF30 /* ReactiveTest.xcdatamodel */;
-			path = ReactiveTest.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = E6DA879B1E38ACB6009CFF30 /* Project object */;
 }

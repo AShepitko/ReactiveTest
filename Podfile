@@ -15,4 +15,7 @@ target 'ReactiveTest' do
 
   pod 'MBProgressHUD', '~> 1.0'
   
+  pod 'RealmSwift', '~> 2.4'
+  pod 'RxRealm', '~> 0.5'
+
 end

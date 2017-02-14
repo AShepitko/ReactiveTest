@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import Moya
 import SwiftyJSON
-import CoreData
+import RealmSwift
 
 class RepoModel {
     
@@ -29,7 +29,7 @@ class RepoModel {
         provider.request(.getRepo(user: appDelegate.username, repo: repo.name!)).filterSuccessfulStatusCodes().subscribe(onNext: { response in
             let jsonRepo = JSON(response.data)
             
-            repo.serverID = jsonRepo["id"].int64Value
+            repo.id = jsonRepo["id"].int64Value
             repo.createdAt = DatesService.shared.parseJsonDate(jsonDate: jsonRepo["created_at"].stringValue) as NSDate?
             repo.desc = jsonRepo["description"].stringValue
             repo.fullName = jsonRepo["full_name"].stringValue
@@ -37,10 +37,17 @@ class RepoModel {
             repo.isPrivate = jsonRepo["private"].boolValue
             repo.name = jsonRepo["name"].stringValue
             repo.size = jsonRepo["size"].int64Value
-
-            appDelegate.saveContext()
-            
-            complete(repo)
+            do {
+                let realm = try! Realm()
+                try realm.write {
+                    realm.create(Repo.self, value: repo, update: true)
+                    
+                    complete(repo)
+                }
+            }
+            catch let e as NSError {
+                error(e)
+            }
         }, onError: { moyaError in
             error(moyaError)
         }).addDisposableTo(disposeBag)

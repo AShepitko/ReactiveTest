@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import Moya
 import SwiftyJSON
-import CoreData
+import RealmSwift
 
 class ReposModel {
     
@@ -22,25 +22,21 @@ class ReposModel {
         }
         
         // fetch local data
-        let repos = user.repos?.allObjects as! [Repo]
+        let repos = Array(user.repos)
         complete(repos)
         
         // fetch server data
         let provider = RxMoyaProvider<GitHubService>(plugins: [ BasicAuthPlugin(username: appDelegate.username, password: appDelegate.password), JsonNetworkLoggerPlugin() ])
         provider.request(.getRepos).filterSuccessfulStatusCodes().subscribe(onNext: { response in
-            var serverRepos = [Repo]()
-            let jsonRepos = JSON(response.data)
-            jsonRepos.arrayValue.forEach({ jsonRepo in
-                let serverID = jsonRepo["id"].intValue
-                var repo = repos.first(where: { r -> Bool in
-                    return serverID == Int(r.serverID)
-                })
-                if repo == nil {
-                    repo = Repo(context: appDelegate.persistentContainer.viewContext)
-                    user.addToRepos(repo!)
-                }
-                if let repo = repo {
-                    repo.serverID = Int64(serverID)
+            do {
+                let jsonRepos = JSON(response.data)
+                
+                let realm = try Realm()
+                realm.beginWrite()
+                jsonRepos.arrayValue.forEach({ jsonRepo in
+                    let serverID = jsonRepo["id"].intValue
+                    let repo = Repo()
+                    repo.id = Int64(serverID)
                     repo.createdAt = DatesService.shared.parseJsonDate(jsonDate: jsonRepo["created_at"].stringValue) as NSDate?
                     repo.desc = jsonRepo["description"].stringValue
                     repo.fullName = jsonRepo["full_name"].stringValue
@@ -49,11 +45,16 @@ class ReposModel {
                     repo.name = jsonRepo["name"].stringValue
                     repo.size = jsonRepo["size"].int64Value
                     
-                    serverRepos.append(repo)
-                }
-                appDelegate.saveContext()
-            })
-            complete(serverRepos)
+                    realm.add(repo, update: true)
+                    user.repos.append(repo)
+                    
+                    print("\(repo)")
+                })
+                try realm.commitWrite()
+                complete(Array(user.repos))
+            } catch let e as NSError {
+                error(e)
+            }
         }, onError: { moyaError in
             switch moyaError {
             case Moya.Error.statusCode(let response):

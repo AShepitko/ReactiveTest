@@ -27,7 +27,7 @@ class RepoViewController: UIViewController {
         super.viewDidLoad()
 
         modelView.repo.asDriver().drive(onNext: { [unowned self] repo in
-            self.serverIDLabel.text = repo?.serverID.description
+            self.serverIDLabel.text = repo?.id.description
             self.nameLabel.text = repo?.name
             self.fullNameLabel.text = repo?.fullName
             self.createdAtLabel.text = repo?.createdAt?.description
