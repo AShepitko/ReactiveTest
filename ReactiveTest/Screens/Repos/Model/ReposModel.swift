@@ -35,8 +35,7 @@ class ReposModel {
                 realm.beginWrite()
                 jsonRepos.arrayValue.forEach({ jsonRepo in
                     let serverID = jsonRepo["id"].intValue
-                    let repo = Repo()
-                    repo.id = Int64(serverID)
+                    let repo = realm.create(Repo.self, value: [ "id": serverID ], update: true)
                     repo.createdAt = DatesService.shared.parseJsonDate(jsonDate: jsonRepo["created_at"].stringValue) as NSDate?
                     repo.desc = jsonRepo["description"].stringValue
                     repo.fullName = jsonRepo["full_name"].stringValue
@@ -45,10 +44,9 @@ class ReposModel {
                     repo.name = jsonRepo["name"].stringValue
                     repo.size = jsonRepo["size"].int64Value
                     
-                    realm.add(repo, update: true)
-                    user.repos.append(repo)
-                    
-                    print("\(repo)")
+                    if !user.repos.contains(repo) {
+                        user.repos.append(repo)
+                    }
                 })
                 try realm.commitWrite()
                 complete(Array(user.repos))

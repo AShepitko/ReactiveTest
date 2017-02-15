@@ -24,10 +24,6 @@ class LoginModel {
             do {
                 let realm = try Realm()
                 
-//                var user = realm.objects(User.self).filter("id == \(serverID)").first
-//                if user == nil {
-//                    user = realm.create(User.self, value: [ "id": serverID ], update: false)
-//                }
                 try realm.write {
                     let user = realm.create(User.self, value: [ "id": serverID ], update: true)
 
