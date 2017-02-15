@@ -28,19 +28,18 @@ class RepoModel {
         let provider = RxMoyaProvider<GitHubService>(plugins: [ BasicAuthPlugin(username: appDelegate.username, password: appDelegate.password), JsonNetworkLoggerPlugin() ])
         provider.request(.getRepo(user: appDelegate.username, repo: repo.name!)).filterSuccessfulStatusCodes().subscribe(onNext: { response in
             let jsonRepo = JSON(response.data)
-            
-            repo.id = jsonRepo["id"].int64Value
-            repo.createdAt = DatesService.shared.parseJsonDate(jsonDate: jsonRepo["created_at"].stringValue) as NSDate?
-            repo.desc = jsonRepo["description"].stringValue
-            repo.fullName = jsonRepo["full_name"].stringValue
-            repo.htmlURL = jsonRepo["html_url"].stringValue
-            repo.isPrivate = jsonRepo["private"].boolValue
-            repo.name = jsonRepo["name"].stringValue
-            repo.size = jsonRepo["size"].int64Value
             do {
-                let realm = try! Realm()
+                let realm = try Realm()
                 try realm.write {
-                    realm.create(Repo.self, value: repo, update: true)
+                    let serverID = jsonRepo["id"].int64Value
+                    let repo = realm.create(Repo.self, value: [ "id" : serverID ], update: true)
+                    repo.createdAt = DatesService.shared.parseJsonDate(jsonDate: jsonRepo["created_at"].stringValue) as NSDate?
+                    repo.desc = jsonRepo["description"].stringValue
+                    repo.fullName = jsonRepo["full_name"].stringValue
+                    repo.htmlURL = jsonRepo["html_url"].stringValue
+                    repo.isPrivate = jsonRepo["private"].boolValue
+                    repo.name = jsonRepo["name"].stringValue
+                    repo.size = jsonRepo["size"].int64Value
                     
                     complete(repo)
                 }

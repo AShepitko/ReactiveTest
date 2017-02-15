@@ -28,13 +28,12 @@ class ReposModel {
         // fetch server data
         let provider = RxMoyaProvider<GitHubService>(plugins: [ BasicAuthPlugin(username: appDelegate.username, password: appDelegate.password), JsonNetworkLoggerPlugin() ])
         provider.request(.getRepos).filterSuccessfulStatusCodes().subscribe(onNext: { response in
+            let jsonRepos = JSON(response.data)
             do {
-                let jsonRepos = JSON(response.data)
-                
                 let realm = try Realm()
                 realm.beginWrite()
                 jsonRepos.arrayValue.forEach({ jsonRepo in
-                    let serverID = jsonRepo["id"].intValue
+                    let serverID = jsonRepo["id"].int64Value
                     let repo = realm.create(Repo.self, value: [ "id": serverID ], update: true)
                     repo.createdAt = DatesService.shared.parseJsonDate(jsonDate: jsonRepo["created_at"].stringValue) as NSDate?
                     repo.desc = jsonRepo["description"].stringValue
