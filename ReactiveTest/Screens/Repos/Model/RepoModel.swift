@@ -20,13 +20,16 @@ class RepoModel {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
+        guard let ownerLogin = repo.owner.first?.login else {
+            return
+        }
         
         // fetch local data
         complete(repo)
         
         // fetch server data
         let provider = RxMoyaProvider<GitHubService>(plugins: [ BasicAuthPlugin(username: appDelegate.username, password: appDelegate.password), JsonNetworkLoggerPlugin() ])
-        provider.request(.getRepo(user: appDelegate.username, repo: repo.name!)).filterSuccessfulStatusCodes().subscribe(onNext: { response in
+        provider.request(.getRepo(user: ownerLogin, repo: repo.name!)).filterSuccessfulStatusCodes().subscribe(onNext: { response in
             let jsonRepo = JSON(response.data)
             do {
                 let realm = try Realm()

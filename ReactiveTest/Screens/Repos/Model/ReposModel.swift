@@ -22,7 +22,7 @@ class ReposModel {
         }
         
         // fetch local data
-        let repos = Array(user.repos)
+        let repos = Array(user.accessibleRepos)
         complete(repos)
         
         // fetch server data
@@ -42,13 +42,23 @@ class ReposModel {
                     repo.isPrivate = jsonRepo["private"].boolValue
                     repo.name = jsonRepo["name"].stringValue
                     repo.size = jsonRepo["size"].int64Value
-                    
-                    if !user.repos.contains(repo) {
-                        user.repos.append(repo)
+                    if !user.accessibleRepos.contains(repo) {
+                        user.accessibleRepos.append(repo)
                     }
+                    
+                    let jsonOwner = jsonRepo["owner"]
+                    let ownerID = jsonOwner["id"].int64Value
+                    let owner = realm.create(Owner.self, value: [ "id": ownerID ], update: true)
+                    owner.avatarURL = jsonOwner["avatar_url"].stringValue
+                    owner.login = jsonOwner["login"].stringValue
+                    owner.htmlURL = jsonOwner["html_url"].stringValue
+                    if !owner.ownRepos.contains(repo) {
+                        owner.ownRepos.append(repo)
+                    }
+
                 })
                 try realm.commitWrite()
-                complete(Array(user.repos))
+                complete(Array(user.accessibleRepos))
             } catch let e as NSError {
                 error(e)
             }

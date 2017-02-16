@@ -19,7 +19,8 @@ class Repo: Object {
     dynamic var name: String?
     dynamic var size: Int64 = 0
     
-    let user = LinkingObjects(fromType: User.self, property: "repos")
+    let accessibleUser = LinkingObjects(fromType: User.self, property: "accessibleRepos")
+    let owner = LinkingObjects(fromType: Owner.self, property: "ownRepos")
     
     override static func primaryKey() -> String? {
         return "id"

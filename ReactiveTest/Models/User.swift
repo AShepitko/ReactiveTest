@@ -8,20 +8,13 @@
 
 import RealmSwift
 
-class User: Object {
+class User: Owner {
     
-    dynamic var id: Int64 = 0
-    dynamic var avatarURL: String?
     dynamic var company: String?
     dynamic var createdAt: NSDate?
     dynamic var email: String?
-    dynamic var htmlURL: String?
-    dynamic var login: String?
     dynamic var name: String?
-
-    let repos = List<Repo>()
     
-    override static func primaryKey() -> String? {
-        return "id"
-    }
+    let accessibleRepos = List<Repo>()
+    
 }
