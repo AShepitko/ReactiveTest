@@ -26,6 +26,7 @@
 		E6AB43081E41D892000C4BC9 /* GitHubService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB43071E41D892000C4BC9 /* GitHubService.swift */; };
 		E6AB430A1E41F00C000C4BC9 /* Repos.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6AB43091E41F00C000C4BC9 /* Repos.storyboard */; };
 		E6AB55671E55C94700F15A0E /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB55661E55C94700F15A0E /* Owner.swift */; };
+		E6AB556A1E57205000F15A0E /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB55691E57205000F15A0E /* ActivityIndicator.swift */; };
 		E6DA87A71E38ACB6009CFF30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DA87A61E38ACB6009CFF30 /* AppDelegate.swift */; };
 		E6DA87AC1E38ACB6009CFF30 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6DA87AA1E38ACB6009CFF30 /* Main.storyboard */; };
 		E6DA87B11E38ACB6009CFF30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6DA87B01E38ACB6009CFF30 /* Assets.xcassets */; };
@@ -73,6 +74,7 @@
 		E6AB43071E41D892000C4BC9 /* GitHubService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GitHubService.swift; path = Services/GitHubService.swift; sourceTree = "<group>"; };
 		E6AB43091E41F00C000C4BC9 /* Repos.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Repos.storyboard; path = Screens/Repos/View/Repos.storyboard; sourceTree = "<group>"; };
 		E6AB55661E55C94700F15A0E /* Owner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Owner.swift; path = Models/Owner.swift; sourceTree = "<group>"; };
+		E6AB55691E57205000F15A0E /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActivityIndicator.swift; path = Services/ActivityIndicator.swift; sourceTree = "<group>"; };
 		E6DA87A31E38ACB6009CFF30 /* ReactiveTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReactiveTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6DA87A61E38ACB6009CFF30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6DA87AB1E38ACB6009CFF30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 		E6AB43061E41D86A000C4BC9 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E6AB55691E57205000F15A0E /* ActivityIndicator.swift */,
 				E6AB43071E41D892000C4BC9 /* GitHubService.swift */,
 				E628567C1E4353B3000CCED1 /* DatesService.swift */,
 			);
@@ -494,6 +497,7 @@
 				E61CFD471E52E73A00AB7C04 /* Repo.swift in Sources */,
 				E6AB55671E55C94700F15A0E /* Owner.swift in Sources */,
 				E6AB43081E41D892000C4BC9 /* GitHubService.swift in Sources */,
+				E6AB556A1E57205000F15A0E /* ActivityIndicator.swift in Sources */,
 				E628567D1E4353B3000CCED1 /* DatesService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

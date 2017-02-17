@@ -18,72 +18,52 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     
-    let viewModel = LoginViewModel()
-    
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.user.asDriver().drive(onNext: { user in
-            guard let user = user else {
-                return
-            }
-            guard let username = self.usernameTextField.text else {
-                return
-            }
-            guard let password = self.passwordTextField.text else {
-                return
-            }
-            
-            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-                appDelegate.username = username
-                appDelegate.password = password
-            }
-            
-            let reposStoryboard = UIStoryboard(name: "Repos", bundle: nil)
-            if let reposNavigationController = reposStoryboard.instantiateInitialViewController() as? UINavigationController {
-                if let reposController = reposNavigationController.viewControllers[0] as? ReposViewController {
-                    reposController.user = user
+        let viewModel = LoginViewModel(usernameObservable: usernameTextField.rx.text.orEmpty.asDriver(),
+                                       passwordObservable: passwordTextField.rx.text.orEmpty.asDriver(),
+                                       loginTaps: loginButton.rx.tap.asDriver())
+        
+        viewModel.loggedInUser.drive(onNext: { [unowned self] user in
+            if let user = user {
+                if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                    appDelegate.username = self.usernameTextField.text!
+                    appDelegate.password = self.passwordTextField.text!
                 }
-                self.present(reposNavigationController, animated: true, completion: nil)
+                
+                let reposStoryboard = UIStoryboard(name: "Repos", bundle: nil)
+                if let reposNavigationController = reposStoryboard.instantiateInitialViewController() as? UINavigationController {
+                    if let reposController = reposNavigationController.viewControllers[0] as? ReposViewController {
+                        reposController.user = user
+                    }
+                    self.present(reposNavigationController, animated: true, completion: nil)
+                }
             }
-        }).addDisposableTo(disposeBag)
+        }).disposed(by: disposeBag)
         
-        viewModel.error.asDriver().drive(onNext: { error in
-            guard let error = error else {
-                self.errorLabel.isHidden = true
-                return
-            }
-            self.errorLabel.isHidden = false
-            self.errorLabel.text = "Error: \(error)"
-        }).addDisposableTo(disposeBag)
+        viewModel.loginEnabled.drive(onNext: { [unowned self] enabled in
+            self.loginButton.isEnabled = enabled
+        }).disposed(by: disposeBag)
         
-        let usernameValidObserver = usernameTextField.rx.text.map({ (text) -> Bool in
-            return (text?.characters.count)! > 0
-        })
-        let passwordValidObserver = passwordTextField.rx.text.map({ (text) -> Bool in
-            return (text?.characters.count)! > 0
-        })
-        Observable.combineLatest(usernameValidObserver, passwordValidObserver) { (v1, v2) -> Bool in
-            return v1 && v2
-        }.bindTo(loginButton.rx.isEnabled).addDisposableTo(disposeBag)
+        viewModel.loginInProgress.drive(onNext: { [unowned self] inProgress in
+            if inProgress {
+                MBProgressHUD.showAdded(to: self.view, animated: true)
+            }
+            else {
+                MBProgressHUD.hide(for: self.view, animated: true)
+            }
+        }).disposed(by: disposeBag)
         
-        loginButton.rx.tap.subscribe(onNext: { [unowned self] () in
-            guard let username = self.usernameTextField.text else {
-                return
+        viewModel.loginError.asDriver().drive(onNext: { error in
+            self.errorLabel.isHidden = (error == nil)
+            if let error = error {
+                self.errorLabel.text = "Login error: \(error)"
             }
-            guard let password = self.passwordTextField.text else {
-                return
-            }
+        }).disposed(by: disposeBag)
 
-            MBProgressHUD.showAdded(to: self.view, animated: true)
-            self.viewModel.login(username: username, password: password).subscribe(onError: { [unowned self] error in
-                MBProgressHUD.hide(for: self.view, animated: true)
-            }, onCompleted: { [unowned self] in
-                MBProgressHUD.hide(for: self.view, animated: true)
-            }).addDisposableTo(self.disposeBag)
-        }).addDisposableTo(disposeBag)
     }
 
     override func didReceiveMemoryWarning() {
