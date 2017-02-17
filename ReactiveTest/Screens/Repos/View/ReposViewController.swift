@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import MBProgressHUD
 
 class ReposViewController: UIViewController {
     
@@ -20,8 +21,6 @@ class ReposViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var user: User?
-
-    let modelView = ReposViewModel()
     
     let disposeBag = DisposeBag()
     
@@ -34,8 +33,14 @@ class ReposViewController: UIViewController {
 
         if let user = user {
             appDelegate.username = user.login! + "1" //TODO: simulate auth failure
+            
+            let refreshItem = UIBarButtonItem(title: "R", style: .plain, target: self, action: nil)
+            self.navigationItem.rightBarButtonItems = [ refreshItem ]
 
-            modelView.repos.asDriver().asObservable().bindTo(tableView.rx.items(cellIdentifier: "RepoTableViewCell", cellType: RepoTableViewCell.self)) { index, repo, cell in
+            let refreshDriver = refreshItem.rx.tap.asDriver()
+            let viewModel = ReposViewModel(withUser: user, reloadTaps: refreshDriver)
+
+            viewModel.repos.asDriver().asObservable().bindTo(tableView.rx.items(cellIdentifier: "RepoTableViewCell", cellType: RepoTableViewCell.self)) { index, repo, cell in
                 cell.nameLabel.text = repo.name
             }.addDisposableTo(disposeBag)
             
@@ -43,26 +48,34 @@ class ReposViewController: UIViewController {
                 self.performSegue(withIdentifier: Segues.repoSegue, sender: repo)
             }).addDisposableTo(disposeBag)
             
-            modelView.error.asDriver().asObservable().subscribe(onNext: { error in
-                guard let error = error else {
-                    return
+//            viewModel.loadingInProgress.drive(onNext: { [unowned self] inProgress in
+//                if inProgress {
+//                    MBProgressHUD.showAdded(to: self.view, animated: true)
+//                }
+//                else {
+//                    MBProgressHUD.hide(for: self.view, animated: true)
+//                }
+//            }).disposed(by: disposeBag)
+            
+            viewModel.loadingError.asDriver().asObservable().subscribe(onNext: { error in
+                if let error = error {
+                    appDelegate.username = user.login! //TODO: fix simulated auth failure
+                    
+                    let alertController = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
+                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    alertController.addAction(defaultAction)
+                    self.present(alertController, animated: true, completion: nil)
                 }
-                
-                let alertController = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
-                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                alertController.addAction(defaultAction)
-                self.present(alertController, animated: true, completion: nil)
             }).addDisposableTo(disposeBag)
             
-            let refreshItem = UIBarButtonItem(title: "R", style: .plain, target: self, action: nil)
-            refreshItem.rx.tap.subscribe(onNext: { [unowned self] in
-                appDelegate.username = user.login! //TODO: fix simulated auth failure
-
-                self.modelView.fetchRepos(forUser: user)
-            }).addDisposableTo(disposeBag)
-            self.navigationItem.rightBarButtonItems = [ refreshItem ]
+//            refreshItem.rx.tap.subscribe(onNext: { [unowned self] in
+//                appDelegate.username = user.login! //TODO: fix simulated auth failure
+//
+//                self.modelView.fetchRepos(forUser: user)
+//            }).addDisposableTo(disposeBag)
             
-            self.modelView.fetchRepos(forUser: user)
+            //self.modelView.fetchRepos(forUser: user)
+            
         }
     }
 

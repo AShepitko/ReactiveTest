@@ -6,21 +6,29 @@
 //  Copyright © 2017 Distillery. All rights reserved.
 //
 
-import Foundation
 import RxSwift
+import RxCocoa
 
 class ReposViewModel {
 
-    private let model = ReposModel()
+    let repos: Driver<[Repo]>
+    let loadingError: Variable<Error?>
+    let loadingInProgress: Driver<Bool>
     
-    let repos = Variable<[Repo]>([])
-    let error = Variable<Error?>(nil)
-    
-    func fetchRepos(forUser user: User) {
-        self.model.fetchRepos(forUser: user, complete: { [unowned self] repos in
-            self.repos.value = repos
-        }, error: { [unowned self] error in
-            self.error.value = error
+    init(withUser user: User, reloadTaps: Driver<Void>) {
+        let model = ReposModel()
+        
+        let errorVariable = Variable<Error?>(nil)
+        loadingError = errorVariable
+        
+        let activityIndicator = ActivityIndicator()
+        loadingInProgress = activityIndicator.asDriver()
+
+        repos = reloadTaps.flatMapLatest({ (Void) in
+            let observable = model.fetchRepos(forUser: user).trackActivity(activityIndicator)
+            return observable.do(onError: { error in
+                errorVariable.value = error
+            }).asDriver(onErrorJustReturn: Array(user.accessibleRepos))
         })
     }
     
