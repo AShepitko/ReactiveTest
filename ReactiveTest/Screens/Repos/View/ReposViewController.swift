@@ -21,7 +21,6 @@ class ReposViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var user: User?
-    var needToRefresh = Variable<Void>()
     
     let disposeBag = DisposeBag()
     
@@ -37,11 +36,23 @@ class ReposViewController: UIViewController {
             
             let refreshItem = UIBarButtonItem(title: "R", style: .plain, target: self, action: nil)
             self.navigationItem.rightBarButtonItems = [ refreshItem ]
+            
+            let refreshObservable = refreshItem.rx.tap.startWith(())
 
-            //needToRefresh.asDriver()
-            //refreshItem.rx.tap
-            let refreshDriver = Observable.of(needToRefresh.asObservable(), refreshItem.rx.tap.asObservable()).merge()
-            let viewModel = ReposViewModel(withUser: user, reloadTaps: refreshDriver.asDriver(onErrorJustReturn: Void()))
+            // pull to refresh
+            let refreshControl = UIRefreshControl()
+            tableView.addSubview(refreshControl)
+            let didPullToRefresh = refreshControl.rx.controlEvent(.valueChanged)
+                .map { _ in
+                    return refreshControl.isRefreshing
+                }
+                .filter { $0 == true }
+                .map { _ in return ()}
+            let refreshByPull = didPullToRefresh.withLatestFrom(refreshObservable).do(onNext: { _ in
+                refreshControl.endRefreshing()
+            })
+
+            let viewModel = ReposViewModel(withUser: user, reloadTaps: Observable.of(refreshByPull, refreshObservable).merge().asDriver(onErrorJustReturn: ()))
 
             viewModel.repos.asDriver().asObservable().bindTo(tableView.rx.items(cellIdentifier: "RepoTableViewCell", cellType: RepoTableViewCell.self)) { index, repo, cell in
                 cell.nameLabel.text = repo.name
@@ -76,10 +87,7 @@ class ReposViewController: UIViewController {
 //
 //                self.modelView.fetchRepos(forUser: user)
 //            }).addDisposableTo(disposeBag)
-            
-            //self.modelView.fetchRepos(forUser: user)
-            
-            needToRefresh.value = Void()
+
         }
     }
 
