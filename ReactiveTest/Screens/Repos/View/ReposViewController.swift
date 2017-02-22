@@ -21,6 +21,7 @@ class ReposViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var user: User?
+    var needToRefresh = Variable<Void>()
     
     let disposeBag = DisposeBag()
     
@@ -32,13 +33,15 @@ class ReposViewController: UIViewController {
         }
 
         if let user = user {
-            appDelegate.username = user.login! + "1" //TODO: simulate auth failure
+//            appDelegate.username = user.login! + "1" //TODO: simulate auth failure
             
             let refreshItem = UIBarButtonItem(title: "R", style: .plain, target: self, action: nil)
             self.navigationItem.rightBarButtonItems = [ refreshItem ]
 
-            let refreshDriver = refreshItem.rx.tap.asDriver()
-            let viewModel = ReposViewModel(withUser: user, reloadTaps: refreshDriver)
+            //needToRefresh.asDriver()
+            //refreshItem.rx.tap
+            let refreshDriver = Observable.of(needToRefresh.asObservable(), refreshItem.rx.tap.asObservable()).merge()
+            let viewModel = ReposViewModel(withUser: user, reloadTaps: refreshDriver.asDriver(onErrorJustReturn: Void()))
 
             viewModel.repos.asDriver().asObservable().bindTo(tableView.rx.items(cellIdentifier: "RepoTableViewCell", cellType: RepoTableViewCell.self)) { index, repo, cell in
                 cell.nameLabel.text = repo.name
@@ -76,6 +79,7 @@ class ReposViewController: UIViewController {
             
             //self.modelView.fetchRepos(forUser: user)
             
+            needToRefresh.value = Void()
         }
     }
 
