@@ -32,7 +32,7 @@ class ReposViewController: UIViewController {
         }
 
         if let user = user {
-//            appDelegate.username = user.login! + "1" //TODO: simulate auth failure
+            appDelegate.username = user.login! + "1" //TODO: simulate auth failure
             
             let refreshItem = UIBarButtonItem(title: "R", style: .plain, target: self, action: nil)
             self.navigationItem.rightBarButtonItems = [ refreshItem ]
@@ -48,19 +48,26 @@ class ReposViewController: UIViewController {
                 }
                 .filter { $0 == true }
                 .map { _ in return ()}
-            let refreshByPull = didPullToRefresh.withLatestFrom(refreshObservable).do(onNext: { _ in
-                refreshControl.endRefreshing()
-            })
+            let refreshByPull = didPullToRefresh.withLatestFrom(refreshObservable)
 
             let viewModel = ReposViewModel(withUser: user, reloadTaps: Observable.of(refreshByPull, refreshObservable).merge().asDriver(onErrorJustReturn: ()))
 
-            viewModel.repos.asDriver().asObservable().bindTo(tableView.rx.items(cellIdentifier: "RepoTableViewCell", cellType: RepoTableViewCell.self)) { index, repo, cell in
+            let reposObservable = viewModel.repos.asObservable()
+            reposObservable.bindTo(tableView.rx.items(cellIdentifier: "RepoTableViewCell", cellType: RepoTableViewCell.self)) { index, repo, cell in
                 cell.nameLabel.text = repo.name
             }.addDisposableTo(disposeBag)
             
             tableView.rx.modelSelected(Repo.self).asDriver().drive(onNext: { [unowned self] repo in
                 self.performSegue(withIdentifier: Segues.repoSegue, sender: repo)
             }).addDisposableTo(disposeBag)
+            
+            reposObservable.mapWithIndex({ repos, index -> (Bool) in
+                return ((index % 2) != 0)
+            }).subscribe(onNext: { end in
+                if end {
+                    refreshControl.endRefreshing()
+                }
+            }).disposed(by: disposeBag)
             
 //            viewModel.loadingInProgress.drive(onNext: { [unowned self] inProgress in
 //                if inProgress {
@@ -81,12 +88,6 @@ class ReposViewController: UIViewController {
                     self.present(alertController, animated: true, completion: nil)
                 }
             }).addDisposableTo(disposeBag)
-            
-//            refreshItem.rx.tap.subscribe(onNext: { [unowned self] in
-//                appDelegate.username = user.login! //TODO: fix simulated auth failure
-//
-//                self.modelView.fetchRepos(forUser: user)
-//            }).addDisposableTo(disposeBag)
 
         }
     }
